@@ -28,17 +28,8 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Incorrect number of args\n");
         exit(1);
     }
-    char* file_name = argv[argc - 1];
     char file_path[FILENAME_MAX];
-    if (getcwd(file_path, FILENAME_MAX) == NULL) {
-        perror("PWD Failure");
-        exit(0);
-    }
-    int path_len = strlen(file_path);
-
-    //Unsafe copy, cannot break buf due to kernel path max
-    file_path[path_len] = '/';
-    strcpy(&file_path[path_len+1], file_name);
+    realpath(argv[argc - 1], file_path);
 
     debug_printf("Target file: %s\n", file_path);
 
@@ -74,7 +65,7 @@ int main(int argc, char **argv) {
         printf("Not an Elf file\n");
         exit(1);
     }
-    debug_printf("%s is an Elf File!!!\n", file_name);
+    debug_printf("%s is an Elf File!!!\n", argv[argc - 1]);
 
     free(file_buf);
     close(fd);

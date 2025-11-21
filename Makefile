@@ -1,5 +1,7 @@
 all:
-	gcc -o readelf readelf.c
+	clang -o readelf readelf.c
 
 debug:
-	gcc -o readelf -DDEBUG readelf.c
+	clang -o readelf -DDEBUG readelf.c
+clean:
+	rm readelf
